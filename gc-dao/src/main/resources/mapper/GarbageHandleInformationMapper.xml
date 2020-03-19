@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="edu.nf.gc.dao.GarbageHandleInformationDao">
+    <resultMap id="GiHandleMap" type="edu.nf.gc.entity.GarbageHandleInformation">
+        <id property="ghId" column="gh_id"/>
+        <result property="ghCity" column="gh_city"/>
+        <result property="ghType" column="gt_message"/>
+        <result property="ghTotal" column="gh_total"/>
+        <result property="ghTime" column="gh_time"/>
+        <result property="ghStaff" column="gh_staff"/>
+        <result property="ghMode" column="ht_message"/>
+    </resultMap>
+    <select id="ghList" resultMap="GiHandleMap">
+        select gh_id,gh_city,gt_message,gh_total,gh_time,gh_staff,ht_message from garbagehandle gh left join garbagetype gt on gh.gh_type=gt.gt_id left join handletype ht on gh.gh_mode=ht.ht_id
+    </select>
+
+    <insert id="insertGhInfo" parameterType="edu.nf.gc.entity.GarbageHandleInformation">
+        insert into garbagehandle(gh_id,gh_city,gh_type,gh_total,gh_time,gh_staff,gh_mode)
+        values(#{ghId},#{ghCity},#{ghType},#{ghTotal},now(),#{ghStaff},#{ghMode})
+    </insert>
+
+    <update id="updateGhInfo" parameterType="edu.nf.gc.entity.GarbageHandleInformation">
+        update garbagehandle set gh_city=#{ghCity},gh_type=#{ghType},gh_total=#{ghTotal},gh_staff=#{ghStaff},gh_mode=#{ghMode} where gh_id=#{ghId}
+    </update>
+
+    <delete id="deleteGhInfo" parameterType="java.lang.String">
+        delete from garbagehandle where gh_id=#{param1}
+    </delete>
+</mapper>

@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="edu.nf.gc.dao.LoginDao">
+    <resultMap id="staffMap" type="edu.nf.gc.entity.Staff">
+        <id property="sid" column="s_id"/>
+        <result property="staffName" column="s_name"/>
+        <result property="staffPwd" column="s_pwd"/>
+        <result property="staffAge" column="s_age"/>
+        <result property="staffType" column="s_type"/>
+        <result property="staffPhone" column="s_phone"/>
+        <result property="staffEntryTime" column="s_entrytime"/>
+    </resultMap>
+    
+    <select id="login" resultMap="staffMap" parameterType="edu.nf.gc.entity.Staff">
+        select s.s_id,s.s_name,s.s_pwd,s.s_age,st.st_message,s.s_phone,s.s_entrytime from
+        staff s left join stafftype st
+        on s.s_type=st.st_type
+        where s_id = #{sid} and s_pwd = #{staffPwd}
+    </select>
+
+    <select id="staffAuthor" resultType="java.lang.String" parameterType="java.lang.Integer">
+        select sa_Authority from staff s
+        left join stafftype st on s.s_type=st.st_type
+        left join staffAuth sa on st.st_type = sa.st_type
+        left join staffAuthority sat on sa.sa_id = sat.sa_id where s_id = #{param1}
+    </select>
+
+    <select id="staffMenu" resultType="java.lang.String" parameterType="java.lang.Integer">
+        select sm_Authority from staff s
+        left join stafftype st on s.s_type=st.st_type
+        left join staffMenu sm on st.st_type = sm.sm_id
+        where s_id = #{param1}
+</select>
+</mapper>

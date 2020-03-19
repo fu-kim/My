@@ -1,0 +1,94 @@
+           <div class="row">
+                <div class="col-md-12">
+                    <div class="card">
+                        <div class="card-header bg-light">
+                            垃圾处理信息月份图
+                        </div>
+
+                        <div class="card-body p-0">
+                            <div class="p-4">
+                                <canvas id="line-chart" width="100%" height="20"></canvas>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="card-body">
+                <div class="table-responsive">
+                    <table class="table table-striped">
+                        <thead>
+                        <tr>
+                            <th>编号</th>
+                            <th>处理垃圾城市</th>
+                            <th>处理垃圾类型</th>
+                            <th>处理垃圾总量</th>
+                            <th>处理时间</th>
+                            <th>处理垃圾方式</th>
+                            <th>垃圾处理人</th>
+                        </tr>
+                        </thead>
+                        <tbody id="t1">
+
+                        </tbody>
+
+                    </table>
+                    <div id="page"></div>
+                </div>
+            </div>
+<script>
+
+    function giList() {
+        $.ajax({
+            url:"../ghList",
+            method:"get",
+            data:{'pageNum':1,'pageSize':10},
+            success:function (result) {
+                if (result.code == 200){
+                    addTable(result.data)
+                    page(result.data)
+                }else{
+                    alert(result.message);
+                }
+            }
+        })
+    }
+    giList();
+    function addTable(dataList){
+        $("#t1").empty();
+        $.each(dataList.list,function (index,obj) {
+            $("#t1").append('<tr>'
+                +'<td>'+obj.ghId+'</td>'
+                +'<td class="text-nowrap">'+obj.ghCity+'</td>'
+                +'<td>'+obj.ghType+'</td>'
+                +'<td>'+obj.ghTotal+'</td>'
+                +'<td>'+obj.ghTime+'</td>'
+                +'<td>'+obj.ghStaff+'</td>'
+                +'<td>'+obj.ghMode+'</td>'
+                +'<tr>'
+                )
+        })
+    }
+    //分页
+    function page(pageInfo){
+        $("#page").pagination(pageInfo.total, { //第一个参数指定共多少条记录
+            items_per_page:pageInfo.pageSize, // 每页显示多少条记录
+            next_text:">", //下一页按钮图标
+            prev_text:"<", //上一页按钮图标
+            num_display_entries:5,//主体页数
+            num_edge_entries: 2, //边缘页数
+            callback: function(index){//定义一个回调函数，用于每次点击页码发起分页查询请求
+                //index为当前页码，只不过下标是从0开始，因此需要+1操作
+                var pageNum = ++index;
+                $.ajax({
+                    url : '../ghList',
+                    method : 'get',
+                    data : {'pageNum' : pageNum, 'pageSize' : 10},
+                    success : function(result){
+                        //渲染表格
+                        addTable(result.data);
+                    }
+                });
+            }
+        });
+    }
+</script>

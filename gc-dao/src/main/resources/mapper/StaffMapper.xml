@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="edu.nf.gc.dao.StaffDao">
+    <resultMap id="staffMap" type="edu.nf.gc.entity.Staff">
+        <id property="sid" column="s_id"/>
+        <result property="staffName" column="s_name"/>
+        <result property="staffPwd" column="s_pwd"/>
+        <result property="staffAge" column="s_age"/>
+        <result property="staffType" column="st_message"/>
+        <result property="staffPhone" column="s_phone"/>
+        <result property="staffEntryTime" column="s_entrytime"/>
+    </resultMap>
+    <select id="sList" resultMap="staffMap">
+        select s_id,s_name,s_pwd,s_age,st.st_message,s_phone,s_entrytime from staff s left join stafftype st on s.s_type = st.st_id
+    </select>
+
+    <select id="getsListById" resultMap="staffMap" parameterType="java.lang.Integer">
+        select * from staff where s_id = #{param3}
+    </select>
+
+    <insert id="insertStaff" parameterType="edu.nf.gc.entity.Staff">
+        insert into staff(s_id,s_name,s_pwd,s_age,s_type,s_phone,s_entrytime)
+        values(#{sid},#{staffName},#{staffPwd},#{staffAge},#{staffType},#{staffPhone},now())
+    </insert>
+
+    <update id="updateStaff" parameterType="edu.nf.gc.entity.Staff">
+        update staff set s_name=#{staffName},s_pwd=#{staffPwd},s_age=#{staffAge},
+        s_phone=#{staffPhone},s_entrytime=#{staffEntryTime} where s_id=#{sid}
+    </update>
+
+    <delete id="deleteStaff" parameterType="java.lang.Integer">
+        delete from staff where s_id=#{param1}
+    </delete>
+
+    <update id="updateStaffType" parameterType="java.lang.Integer">
+        update staff set s_type=#{param2} where s_id=#{param1}
+    </update>
+
+    <select id="getPwd" resultType="java.lang.String" parameterType="java.lang.Integer">
+        select s_pwd from staff where s_id=#{param1}
+    </select>
+</mapper>

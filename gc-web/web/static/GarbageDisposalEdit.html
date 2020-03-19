@@ -1,0 +1,266 @@
+<div class="row">
+    <div class="col-md-12">
+        <div class="card">
+            <div class="card">
+                <div class="card-header bg-light">
+                    垃圾处理百分比图
+                </div>
+
+                <div class="card-body">
+                    <div class="progress mt-3" style="height: 50px">
+                        <div class="progress-bar bg-danger" role="progressbar" style="width: 35%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+
+                    <div class="progress mt-3" style="height: 50px">
+                        <div class="progress-bar bg-success" role="progressbar" style="width: 55%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+
+                    <div class="progress mt-3" style="height: 50px">
+                        <div class="progress-bar  bg-warning" role="progressbar" style="width: 25%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100">25%</div>
+                    </div>
+
+                    <div class="progress mt-3" style="height: 50px">
+                        <div class="progress-bar bg-info" role="progressbar" style="width: 65%" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100"></div>
+                    </div>
+
+                </div>
+            </div>
+            <button class="btn btn-outline-primary" data-toggle="modal" data-target="#modal-4">录入垃圾处理信息</button>
+        </div>
+    </div>
+</div>
+<div class="card-body">
+    <div class="table-responsive">
+        <table class="table table-striped">
+            <thead>
+            <tr>
+                <th>编号</th>
+                <th>处理垃圾城市</th>
+                <th>处理垃圾类型</th>
+                <th>处理垃圾总量</th>
+                <th>处理时间</th>
+                <th>处理垃圾方式</th>
+                <th>垃圾处理人</th>
+                <th>编辑操作</th>
+            </tr>
+            </thead>
+            <tbody id="t1">
+
+            </tbody>
+
+        </table>
+        <div id="page"></div>
+    </div>
+</div>
+<div class="modal fade" id="modal-4" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-primary border-0">
+                <h5 class="modal-title text-white">录入垃圾处理信息</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body p-5">
+                <form id="inputGhHandleInfo">
+                    编号：<input name="ghId" class="form-control" placeholder="请输入编号" style="margin-bottom: 10px">
+                    处理垃圾城市：<input name="ghCity" class="form-control" placeholder="请输入城市" style="margin-bottom: 10px">
+                    处理垃圾类型：<select id="insertGhType" name="ghType" class="form-control">
+                    <option value="1">有害垃圾</option>
+                    <option value="2">可回收垃圾</option>
+                    <option value="3">厨余垃圾</option>
+                    <option value="4">其他垃圾</option>
+                    </select>
+                    处理垃圾总量：<input name="ghTotal"  class="form-control" placeholder="请输入处理垃圾总量" style="margin-bottom: 10px">
+                    处理垃圾方式：<select name="ghMode" id="insertGhMode" class="form-control">
+                    <option value="1">焚烧</option>
+                    <option value="2">填埋</option>
+                    <option value="3">回收利用</option>
+                    <option value="4">堆肥</option>
+                    </select>
+                    垃圾处理人：<input name="ghStaff"  class="form-control" placeholder="请输入垃圾处理人" style="margin-bottom: 10px">
+                  </form>
+            </div>
+
+            <div class="modal-footer border-0">
+                <button type="button" class="btn btn-link" data-dismiss="modal" id="insertClose">关闭</button>
+                <button type="button" class="btn btn-primary" onclick="insertGh()">确定提交</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="modal-5" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-success border-0">
+                <h5 class="modal-title text-white">修改垃圾处理总量信息</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body p-5">
+                <form id="updateGhHandleInfo">
+                    编号：<input id="ghId" name="ghId" class="form-control" placeholder="请输入编号" style="margin-bottom: 10px" readonly>
+                    处理垃圾城市：<input name="ghCity" class="form-control" placeholder="请输入城市" style="margin-bottom: 10px">
+                    处理垃圾类型：<select id="updateGhType" name="ghType" class="form-control">
+                    <option value="1">有害垃圾</option>
+                    <option value="2">可回收垃圾</option>
+                    <option value="3">厨余垃圾</option>
+                    <option value="4">其他垃圾</option>
+                </select>
+                    处理垃圾总量：<input name="ghTotal"  class="form-control" placeholder="请输入处理垃圾总量" style="margin-bottom: 10px">
+                    处理垃圾方式：<select name="ghMode" id="updateGhMode" class="form-control">
+                    <option value="1">焚烧</option>
+                    <option value="2">填埋</option>
+                    <option value="3">回收利用</option>
+                    <option value="4">堆肥</option>
+                </select>
+                    垃圾处理人：<input name="ghStaff"  class="form-control" placeholder="请输入垃圾处理人" style="margin-bottom: 10px">
+                </form>
+            </div>
+
+            <div class="modal-footer border-0">
+                <button type="button" class="btn btn-link" data-dismiss="modal" id="updateClose">关闭</button>
+                <button type="button" class="btn btn-success" onclick="updateGh()">确定修改</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="modal-13" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content bg-danger">
+            <div class="modal-header border-0">
+                <h5 class="modal-title text-white">删除数据</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body text-white p-5">
+                <input type="hidden" id="deleteGhId">
+                <i style="font-size: 30px">你确定删除该条数据吗？</i>
+            </div>
+
+            <div class="modal-footer border-0">
+                <button type="button" class="btn btn-danger" data-dismiss="modal"  id="deleteClose">关闭</button>
+                <button type="button" class="btn btn-danger" onclick="deleteGh()">确定删除</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<script>
+
+    function giList() {
+        $.ajax({
+            url:"../ghList",
+            method:"get",
+            data:{'pageNum':1,'pageSize':10},
+            success:function (result) {
+                if (result.code == 200){
+                    addTable(result.data)
+                    page(result.data)
+                }else{
+                    alert(result.message);
+                }
+            }
+        })
+    }
+    giList();
+    function addTable(dataList){
+        $("#t1").empty();
+        $.each(dataList.list,function (index,obj) {
+            $("#t1").append('<tr>'
+                +'<td>'+obj.ghId+'</td>'
+                +'<td class="text-nowrap">'+obj.ghCity+'</td>'
+                +'<td>'+obj.ghType+'</td>'
+                +'<td>'+obj.ghTotal+'</td>'
+                +'<td>'+obj.ghTime+'</td>'
+                +'<td>'+obj.ghMode+'</td>'
+                +'<td>'+obj.ghStaff+'</td>'
+                +'<td><button class="btn btn-outline-success" data-toggle="modal" data-target="#modal-5" id="'+obj.ghId+'" onclick="updateLoadGId(this.id)">修改</button>'
+                +'<button class="btn btn-outline-danger" data-toggle="modal" data-target="#modal-13" id="'+obj.ghId+'" onclick="deleteLoadGId(this.id)">删除</button></td>'
+                +'<tr>'
+            )
+        })
+    }
+    //分页
+    function page(pageInfo){
+        $("#page").pagination(pageInfo.total, { //第一个参数指定共多少条记录
+            items_per_page:pageInfo.pageSize, // 每页显示多少条记录
+            next_text:">", //下一页按钮图标
+            prev_text:"<", //上一页按钮图标
+            num_display_entries:5,//主体页数
+            num_edge_entries: 2, //边缘页数
+            callback: function(index){//定义一个回调函数，用于每次点击页码发起分页查询请求
+                //index为当前页码，只不过下标是从0开始，因此需要+1操作
+                var pageNum = ++index;
+                $.ajax({
+                    url : '../ghList',
+                    method : 'get',
+                    data : {'pageNum' : pageNum, 'pageSize' : 10},
+                    success : function(result){
+                        //渲染表格
+                        addTable(result.data);
+                    }
+                });
+            }
+        });
+    }
+    function insertGh() {
+        $.ajax({
+            url:"../insertGhInfo",
+            method:"post",
+            data:$("#inputGhHandleInfo").serialize(),
+            success:function (result) {
+                if (result.code == 200){
+                    $("#insertClose").click();
+                    alert(result.message);
+                    giList();
+                }else{
+                    alert(result.message);
+                }
+            }
+        })
+    }
+    function updateGh() {
+        $.ajax({
+            url:"../updateGhInfo",
+            method:"post",
+            data:$("#updateGhHandleInfo").serialize(),
+            success:function (result) {
+                if (result.code == 200){
+                    $("#updateClose").click();
+                    alert(result.message);
+                    giList();
+                }else{
+                    alert(result.message);
+                }
+            }
+        })
+    }
+    function deleteGh() {
+        $.ajax({
+            url:"../deleteGhInfo",
+            method:"post",
+            data:{"ghId":$("#deleteGhId").val()},
+            success:function (result) {
+                if (result.code == 200){
+                    $("#deleteClose").click();
+                    alert(result.message);
+                    giList();
+                }else{
+                    alert(result.message);
+                }
+            }
+        })
+    }
+    function updateLoadGId(id) {
+        $("#ghId").val(id);
+    }
+    function deleteLoadGId(id) {
+        $("#deleteGhId").val(id);
+    }
+</script>

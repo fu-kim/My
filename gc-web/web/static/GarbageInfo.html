@@ -1,0 +1,119 @@
+
+<div class="card">
+    <div class="card-header bg-light">
+        全国垃圾总量信息
+    </div>
+    <div class="col-md-12">
+        <label for="cityName">查询城市</label>
+        <div class="input-group">
+            <input type="text" id="cityName" name="cityName" class="form-control" placeholder="CityName">
+            <span class="input-group-btn">
+                            <button onclick="findCity()" type="button" class="btn btn-primary"><i class="fa fa-search"></i> Find</button>
+                        </span>&nbsp;
+            <button type="button" class="btn btn-secondary">
+                <i class="fa fa-download"></i><a href="../export">导出数据表</a>
+            </button>
+        </div>
+
+    </div>
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>编号</th>
+                    <th>城市名称</th>
+                    <th>总量</th>
+                    <th>有害垃圾总量</th>
+                    <th>可回收垃圾总量</th>
+                    <th>厨余垃圾垃圾总量</th>
+                    <th>其他垃圾总量</th>
+                    <th>录入时间</th>
+                    <th>操作员</th>
+                </tr>
+                </thead>
+                <tbody id="t1">
+
+
+                </tbody>
+
+            </table>
+            <div id="page"></div>
+        </div>
+    </div>
+</div>
+<script src="js/jquery.table2excel.js"></script>
+<script>
+
+    $(function () {
+        $.ajax({
+            url:"../giList",
+            method:"get",
+            data:{'pageNum':1,'pageSize':10},
+            success:function (result) {
+                if (result.code == 200){
+                    addTable(result.data)
+                    page(result.data)
+                }else{
+                    alert(result.message);
+                }
+            }
+        })
+    })
+
+    function addTable(dataList){
+        $("#t1").empty();
+        $.each(dataList.list,function (index,obj) {
+            $("#t1").append('<tr>'
+                +'<td>'+obj.giId+'</td>'
+                +'<td class="text-nowrap">'+obj.giCity+'</td>'
+                +'<td>'+obj.giTotal+' T</td>'
+                +'<td>'+obj.giHarmful+' T</td>'
+                +'<td>'+obj.giRecyclable+' T</td>'
+                +'<td>'+obj.giKitchenWaste+' T</td>'
+                +'<td>'+obj.giOther+' T</td>'
+                +'<td>'+obj.giIntoDate+'</td>'
+                +'<td>'+obj.giStaff+'</td>'
+                +'</tr>')
+        })
+    }
+    //分页
+    function page(pageInfo){
+        $("#page").pagination(pageInfo.total, { //第一个参数指定共多少条记录
+            items_per_page:pageInfo.pageSize, // 每页显示多少条记录
+            next_text:">", //下一页按钮图标
+            prev_text:"<", //上一页按钮图标
+            num_display_entries:5,//主体页数
+            num_edge_entries: 2, //边缘页数
+            callback: function(index){//定义一个回调函数，用于每次点击页码发起分页查询请求
+                //index为当前页码，只不过下标是从0开始，因此需要+1操作
+                var pageNum = ++index;
+                $.ajax({
+                    url : '../giList',
+                    method : 'get',
+                    data : {'pageNum' : pageNum, 'pageSize' : 10},
+                    success : function(result){
+                        //渲染表格
+                        addTable(result.data);
+                    }
+                });
+            }
+        });
+    }
+    function findCity() {
+        $.ajax({
+            url:"../getGiListByCity",
+            method:"get",
+            data:{'pageNum':1,'pageSize':20,'cityName':$("#cityName").val()},
+            success:function (result) {
+                if (result.code == 200){
+                    addTable(result.data)
+                    page(result.data)
+                }else{
+                    alert(result.message);
+                }
+            }
+        })
+    }
+
+</script>

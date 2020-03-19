@@ -1,0 +1,518 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, user-scalable=no, initial-scale=1.0, maximum-scale=1.0, minimum-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Carbon - Admin Template</title>
+    <link rel="stylesheet" href="css/pagination.css">
+    <link rel="stylesheet" href="vendor/simple-line-icons/css/simple-line-icons.css">
+    <link rel="stylesheet" href="vendor/font-awesome/css/fontawesome-all.min.css">
+    <link rel="stylesheet" href="css/styles.css">
+
+</head>
+<body class="sidebar-fixed header-fixed">
+<div class="page-wrapper">
+    <nav class="navbar page-header">
+        <a href="#" class="btn btn-link sidebar-mobile-toggle d-md-none mr-auto">
+            <i class="fa fa-bars"></i>
+        </a>
+
+        <a class="navbar-brand" href="#">
+          <img src="images/GCLOGO.png" height="45" />
+        </a>
+
+        <a href="#" class="btn btn-link sidebar-toggle d-md-down-none">
+            <i class="fa fa-bars"></i>
+        </a>
+
+        <ul class="navbar-nav ml-auto">
+            <li class="nav-item d-md-down-none">
+                <a href="#">
+                    <i class="fa fa-bell"></i>
+                    <span class="badge badge-pill badge-danger">5</span>
+                </a>
+            </li>
+
+            <li class="nav-item d-md-down-none">
+                <a href="#">
+                    <i class="fa fa-envelope-open"></i>
+                    <span class="badge badge-pill badge-danger">5</span>
+                </a>
+            </li>
+
+            <li class="nav-item dropdown">
+                <a class="nav-link dropdown-toggle" href="#" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                    <img src="images/avatar-1.png" class="avatar avatar-sm" alt="logo">
+                    <span class="small ml-1 d-md-down-none" id="staffName">John Smith</span>
+                </a>
+
+                <div class="dropdown-menu dropdown-menu-right">
+                    <div class="dropdown-header">Account</div>
+
+                    <a href="#" class="dropdown-item">
+                        <i class="fa fa-user"></i> Profile
+                    </a>
+
+                    <a href="#" class="dropdown-item">
+                        <i class="fa fa-envelope"></i> Messages
+                    </a>
+
+                    <div class="dropdown-header">Settings</div>
+
+                    <a href="#" class="dropdown-item">
+                        <i class="fa fa-bell"></i> Notifications
+                    </a>
+
+                    <a href="#" class="dropdown-item">
+                        <i class="fa fa-wrench"></i> Settings
+                    </a>
+
+                    <a href="#" class="dropdown-item">
+                        <i class="fa fa-lock"></i> Logout
+                    </a>
+                </div>
+            </li>
+        </ul>
+    </nav>
+
+    <div class="main-container">
+        <div class="sidebar">
+            <nav class="sidebar-nav">
+                <ul class="nav">
+                    <li class="nav-title">垃圾分类管理系统</li>
+
+                    <li class="nav-item" id="gchome" style="display: none">
+                        <a href="gchome.html" class="nav-link active">
+                            <i class="icon icon-speedometer"></i> 全国垃圾总量
+                        </a>
+                    </li>
+
+                    <li class="nav-item nav-dropdown" id="GarbageInfo" style="display: none">
+                        <a href="#" class="nav-link nav-dropdown-toggle">
+                            <i class="icon icon-target"></i> 城市垃圾总量 <i class="fa fa-caret-left"></i>
+                        </a>
+
+                        <ul class="nav-dropdown-items">
+                            <li class="nav-item">
+                                <a href="javascript:void(0)" onclick="loadGarbageInfo()" class="nav-link">
+                                    <i class="icon icon-target"></i> 查询城市垃圾总量
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a href="javascript:void(0)" onclick="loadGarbageInfoEdit()" class="nav-link">
+                                    <i class="icon icon-target"></i> 编辑数据
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li class="nav-item nav-dropdown" id="GarbageDisposal" style="display: none">
+                        <a href="#" class="nav-link nav-dropdown-toggle">
+                            <i class="icon icon-energy"></i> 垃圾处理 <i class="fa fa-caret-left"></i>
+                        </a>
+
+                        <ul class="nav-dropdown-items">
+                            <li class="nav-item">
+                                <a href="javascript:void(0)" onclick="loadGarbageDisposal()" class="nav-link">
+                                    <i class="icon icon-energy"></i> 录入处理信息
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a href="javascript:void(0)" onclick="loadGarbageDisposalEdit()" class="nav-link">
+                                    <i class="icon icon-energy"></i> 编辑
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li class="nav-item nav-dropdown" id="Staff" style="display: none">
+                        <a href="#" class="nav-link nav-dropdown-toggle">
+                            <i class="icon icon-graph"></i> 职员信息<i class="fa fa-caret-left"></i>
+                        </a>
+
+                        <ul class="nav-dropdown-items">
+                            <li class="nav-item">
+                                <a href="javascript:void(0)" onclick="loadStaff()" class="nav-link">
+                                    <i class="icon icon-graph"></i> 信息编辑
+                                </a>
+                            </li>
+                        </ul>
+                    </li>
+
+                    <li class="nav-title">More</li>
+
+                    <li class="nav-item nav-dropdown">
+                        <a href="#" class="nav-link nav-dropdown-toggle">
+                            <i class="icon icon-umbrella"></i> 设置 <i class="fa fa-caret-left"></i>
+                        </a>
+
+                        <ul class="nav-dropdown-items">
+                            <li class="nav-item">
+                                <a href="" class="nav-link">
+                                    <i class="icon icon-umbrella"></i> 退出登录
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a href="login.html" class="nav-link">
+                                    <i class="icon icon-umbrella"></i> 重置密码
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a href="register.html" class="nav-link">
+                                    <i class="icon icon-umbrella"></i> 权限
+                                </a>
+                            </li>
+
+                            <li class="nav-item">
+                                <a href="invoice.html" class="nav-link">
+                                    <i class="icon icon-umbrella"></i> 编辑信息
+                                </a>
+                            </li>
+
+                        </ul>
+                    </li>
+                </ul>
+            </nav>
+        </div>
+
+        <div class="content" id="content">
+            <div class="container-fluid">
+                <div class="row">
+                    <div class="col-md-3">
+                        <div class="card p-4">
+                            <div class="card-body d-flex justify-content-between align-items-center">
+                                <div>
+                                    <span class="h4 d-block font-weight-normal mb-2" id="getCity"></span>
+                                    <span class="font-weight-light">全国监控城市</span>
+                                </div>
+
+                                <div class="h2 text-muted">
+                                    <i class="icon icon-people"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="card p-4">
+                            <div class="card-body d-flex justify-content-between align-items-center">
+                                <div>
+                                    <span class="h4 d-block font-weight-normal mb-2" id="giTotal">32,400</span>
+                                    <span class="font-weight-light">收入总量</span>
+                                </div>
+
+                                <div class="h2 text-muted">
+                                    <i class="icon icon-wallet"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="card p-4">
+                            <div class="card-body d-flex justify-content-between align-items-center">
+                                <div>
+                                    <span class="h4 d-block font-weight-normal mb-2">900</span>
+                                    <span class="font-weight-light">处理总量</span>
+                                </div>
+
+                                <div class="h2 text-muted">
+                                    <i class="icon icon-cloud-download"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="col-md-3">
+                        <div class="card p-4">
+                            <div class="card-body d-flex justify-content-between align-items-center">
+                                <div>
+                                    <span class="h4 d-block font-weight-normal mb-2">32s</span>
+                                    <span class="font-weight-light">处理时间</span>
+                                </div>
+
+                                <div class="h2 text-muted">
+                                    <i class="icon icon-clock"></i>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="row ">
+                    <div class="col-md-12">
+                        <div class="card">
+                            <div class="card-body p-0">
+                                <div class="p-4">
+                                    <div class="card">
+                                        <div class="card-header bg-light">
+                                            全国垃圾总量信息
+                                        </div>
+
+                                        <div class="card-body">
+                                            <div class="table-responsive">
+                                                <table class="table">
+                                                    <thead>
+                                                    <tr>
+                                                        <th>编号</th>
+                                                        <th>城市名称</th>
+                                                        <th>总量</th>
+                                                        <th>有害垃圾总量</th>
+                                                        <th>可回收垃圾总量</th>
+                                                        <th>厨余垃圾垃圾总量</th>
+                                                        <th>其他垃圾总量</th>
+                                                        <th>录入时间</th>
+                                                        <th>操作员</th>
+                                                    </tr>
+                                                    </thead>
+                                                    <tbody id="t1">
+
+
+                                                    </tbody>
+                                                    <div id="page"></div>
+                                                </table>
+
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                </div>
+
+                                <div class="justify-content-around mt-4 p-4 bg-light d-flex border-top d-md-down-none">
+                                    <div class="text-center">
+                                        <div class="text-muted small">有害垃圾</div>
+                                        <div id="getHarmful"></div>
+                                    </div>
+
+                                    <div class="text-center">
+                                        <div class="text-muted small">可回收垃圾</div>
+                                        <div id="getRecyclable"></div>
+                                    </div>
+
+                                    <div class="text-center">
+                                        <div class="text-muted small">厨余垃圾</div>
+                                        <div id="getKitchenWaste"></div>
+                                    </div>
+
+                                    <div class="text-center">
+                                        <div class="text-muted small">其他垃圾</div>
+                                        <div id="getGiOther"></div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<script src="vendor/jquery/jquery.min.js"></script>
+<script src="vendor/popper.js/popper.min.js"></script>
+<script src="vendor/bootstrap/js/bootstrap.min.js"></script>
+<script src="vendor/chart.js/chart.min.js"></script>
+<script src="js/carbon.js"></script>
+<script src="js/demo.js"></script>
+<script src="js/jquery.pagination.js"></script>
+
+
+<script>
+    function load () {
+        getStaffMenu();
+        $.ajax({
+            url:"../giList",
+            method:"get",
+            data:{'pageNum':1,'pageSize':5},
+            success:function (result) {
+                if (result.code == 200){
+                    addTable(result.data)
+                    page(result.data)
+                    gatTotal();
+                    getCityNum();
+                    getHarmful();
+                    getRecyclable();
+                    getGiOther();
+                    getKitchenWaste();
+                    GetStaff();
+                }else{
+                    alert(result.message);
+                }
+            }
+        })
+    }
+
+    load();
+
+    function gatTotal() {
+        $.ajax({
+            url:"../getTotal",
+            method:"get",
+            success:function (result) {
+                if (result.code == 200){
+                    $("#giTotal").html(result.data+" T");
+                }else{
+                    alert(result.message);
+                }
+            }
+        })
+    }
+
+    function getCityNum() {
+        $.ajax({
+            url:"../getCityNum",
+            method:"get",
+            success:function (result) {
+                if (result.code == 200){
+                    $("#getCity").html(result.data);
+                }else{
+                    alert(result.message);
+                }
+            }
+        })
+    }
+
+    function getHarmful() {
+        $.ajax({
+            url:"../getHarmful",
+            method:"get",
+            success:function (result) {
+                if (result.code == 200){
+                    $("#getHarmful").html(result.data+" T");
+                }else{
+                    alert(result.message);
+                }
+            }
+        })
+    }
+    function getRecyclable() {
+        $.ajax({
+            url:"../getRecyclable",
+            method:"get",
+            success:function (result) {
+                if (result.code == 200){
+                    $("#getRecyclable").html(result.data+" T");
+                }else{
+                    alert(result.message);
+                }
+            }
+        })
+    }
+    function getGiOther() {
+        $.ajax({
+            url:"../getGiOther",
+            method:"get",
+            success:function (result) {
+                if (result.code == 200){
+                    $("#getGiOther").html(result.data+" T");
+                }else{
+                    alert(result.message);
+                }
+            }
+        })
+    }
+    function getKitchenWaste() {
+        $.ajax({
+            url:"../getKitchenWaste",
+            method:"get",
+            success:function (result) {
+                if (result.code == 200){
+                    $("#getKitchenWaste").html(result.data+" T");
+                }else{
+                    alert(result.message);
+                }
+            }
+        })
+    }
+
+    function GetStaff() {
+        $.ajax({
+            url:"../getStaff",
+            method:"get",
+            success:function (result) {
+                if (result.code == 200){
+                    $("#staffName").html(result.data.staffName);
+                }else{
+                    alert(result.message);
+                }
+            }
+        })
+    }
+    function getStaffMenu() {
+        $.ajax({
+            url:"../getStaffMenu",
+            method: "get",
+            success:function (result) {
+                if (result.code == 200) {
+                    $.each(result.data,function (index,obj) {
+                        $("#"+obj).show();
+                    })
+                }else{
+                    alert(result.message);
+                }
+            }
+        });
+    }
+    function addTable(dataList){
+        $("#t1").empty();
+        $.each(dataList.list,function (index,obj) {
+                $("#t1").append('<tr>'
+                +'<td>'+obj.giId+'</td>'
+                +'<td class="text-nowrap">'+obj.giCity+'</td>'
+                +'<td>'+obj.giTotal+' T</td>'
+                +'<td>'+obj.giHarmful+' T</td>'
+                +'<td>'+obj.giRecyclable+' T</td>'
+                +'<td>'+obj.giKitchenWaste+' T</td>'
+                +'<td>'+obj.giOther+' T</td>'
+                +'<td>'+obj.giIntoDate+'</td>'
+                +'<td>'+obj.giStaff+'</td>'
+            +'</tr>')
+        })
+    }
+    //分页
+    function page(pageInfo){
+        $("#page").pagination(pageInfo.total, { //第一个参数指定共多少条记录
+            items_per_page:pageInfo.pageSize, // 每页显示多少条记录
+            next_text:">", //下一页按钮图标
+            prev_text:"<", //上一页按钮图标
+            num_display_entries:5,//主体页数
+            num_edge_entries: 2, //边缘页数
+            callback: function(index){//定义一个回调函数，用于每次点击页码发起分页查询请求
+                //index为当前页码，只不过下标是从0开始，因此需要+1操作
+                var pageNum = ++index;
+                $.ajax({
+                    url : '../giList',
+                    method : 'get',
+                    data : {'pageNum' : pageNum, 'pageSize' : 5},
+                    success : function(result){
+                        //渲染表格
+                        addTable(result.data);
+                    }
+                });
+            }
+        });
+    }
+    function loadGarbageInfo(){
+        $("#content").load('GarbageInfo.html');
+    }
+    function loadGarbageInfoEdit(){
+        $("#content").load('GarbageInfoEdit.html');
+    }
+    function loadGcHome(){
+        $("#content").load('gchome.html');
+    }function loadStaff(){
+        $("#content").load('Staff.html');
+    }
+    function loadGarbageDisposalEdit(){
+        $("#content").load('GarbageDisposalEdit.html');
+    }
+    function loadGarbageDisposal(){
+        $("#content").load('GarbageDisposal.html');
+    }
+</script>
+</body>
+</html>

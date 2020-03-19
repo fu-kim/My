@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="edu.nf.gc.dao.GarbageInformationDao">
+    <resultMap id="GiMap" type="edu.nf.gc.entity.GarbageInformation">
+        <id property="giId" column="gi_id"/>
+        <result property="giCity" column="gi_city"/>
+        <result property="giTotal" column="gi_total"/>
+        <result property="giHarmful" column="gi_harmful"/>
+        <result property="giRecyclable" column="gi_recyclable"/>
+        <result property="giKitchenWaste" column="gi_kitchenwaste"/>
+        <result property="giOther" column="gi_other"/>
+        <result property="giIntoDate" column="gi_intodate"/>
+        <result property="giStaff" column="gi_staff"/>
+    </resultMap>
+
+    <select id="giList" resultMap="GiMap">
+        select * from urbangarbageinformation
+    </select>
+
+    <select id="gList" resultMap="GiMap">
+        select * from urbangarbageinformation
+    </select>
+    <select id="getTotal" resultType="java.math.BigDecimal">
+        select sum(gi_total) from urbangarbageinformation
+    </select>
+
+    <select id="getCityNum" resultType="java.lang.Integer">
+        select count(*) from (select distinct gi_city from urbangarbageinformation) a
+    </select>
+
+    <select id="getHarmful" resultType="java.math.BigDecimal" >
+        select sum(gi_harmful) from urbangarbageinformation
+    </select>
+
+    <select id="getRecyclable" resultType="java.math.BigDecimal">
+        select sum(gi_recyclable) from urbangarbageinformation
+    </select>
+
+    <select id="getKitchenWaste" resultType="java.math.BigDecimal">
+        select sum(gi_kitchenwaste) from urbangarbageinformation
+    </select>
+
+    <select id="getGiOther" resultType="java.math.BigDecimal">
+        select sum(gi_other) from urbangarbageinformation
+    </select>
+
+    <select id="getGiListByCity" resultMap="GiMap" parameterType="java.lang.String">
+        select * from urbangarbageinformation where gi_city = #{param3}
+    </select>
+
+    <insert id="insertGiInfo" parameterType="edu.nf.gc.entity.GarbageInformation">
+        insert into urbangarbageinformation(gi_id,gi_city,gi_total,gi_harmful,gi_recyclable,gi_kitchenwaste,gi_other,gi_intodate,gi_staff)
+        values(#{giId},#{giCity},#{giTotal},#{giHarmful},#{giRecyclable},#{giKitchenWaste},#{giOther},now(),#{giStaff})
+    </insert>
+
+    <update id="updateGiInfo" parameterType="edu.nf.gc.entity.GarbageInformation">
+        update urbangarbageinformation set gi_city=#{giCity},gi_total=#{giTotal},gi_harmful=#{giHarmful},gi_recyclable=#{giRecyclable},
+        gi_kitchenwaste=#{giKitchenWaste},gi_other=#{giOther},gi_staff=#{giStaff} where gi_id=#{giId}
+    </update>
+
+    <delete id="deleteGiInfo" parameterType="java.lang.String">
+        delete from urbangarbageinformation where gi_id=#{param1}
+    </delete>
+</mapper>

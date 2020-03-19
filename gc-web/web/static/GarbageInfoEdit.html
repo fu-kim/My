@@ -1,0 +1,300 @@
+<div class="card">
+    <div class="card-header bg-light">
+        全国垃圾总量信息
+    </div>
+
+    <div class="col-md-4" style="text-align: center;position: relative;left: 30%">
+        <div class="input-group">
+            <input type="text" id="cityName" name="cityName" class="form-control" placeholder="CityName">
+            <span class="input-group-btn">
+                            <button onclick="findCity()" type="button" class="btn btn-primary"><i class="fa fa-search"></i> Find</button>
+                        </span>
+
+        </div>
+    </div>
+    <br/>
+    <button class="btn btn-outline-primary" data-toggle="modal" data-target="#modal-4">录入垃圾信息</button>
+
+    <div class="card-body">
+        <div class="table-responsive">
+            <table class="table table-striped">
+                <thead>
+                <tr>
+                    <th>编号</th>
+                    <th>城市名称</th>
+                    <th>总量</th>
+                    <th>有害垃圾总量</th>
+                    <th>可回收垃圾总量</th>
+                    <th>厨余垃圾垃圾总量</th>
+                    <th>其他垃圾总量</th>
+                    <th>录入时间</th>
+                    <th>操作员</th>
+                    <th>编辑操作</th>
+                </tr>
+                </thead>
+                <tbody id="t1">
+
+                </tbody>
+
+            </table>
+            <div id="page"></div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="modal-4" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-primary border-0">
+                <h5 class="modal-title text-white">录入垃圾数据</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body p-5">
+                <form id="inputGiInfo">
+                    编号：<input name="giId" class="form-control" placeholder="请输入编号" style="margin-bottom: 10px">
+                    城市信息：<input name="giCity"  class="form-control" placeholder="请输入城市信息" style="margin-bottom: 10px">
+                    有害垃圾总量：<input onblur="totalInsert();" id="insertHarmful"  name="giHarmful"  class="form-control" placeholder="请输入有害垃圾总量" style="margin-bottom: 10px">
+                    可回收垃圾总量：<input  onblur="totalInsert();" id="insertRecyclable" name="giRecyclable"  class="form-control" placeholder="请输入可回收垃圾总量" style="margin-bottom: 10px">
+                    厨余垃圾总量：<input onblur="totalInsert();" id="insertKitchenWaste" name="giKitchenWaste"  class="form-control" placeholder="请输入厨余垃圾总量" style="margin-bottom: 10px">
+                    其他垃圾总量：<input onblur="totalInsert();" id="insertOther" name="giOther"  class="form-control" placeholder="请输入其他垃圾总量" style="margin-bottom: 10px">
+                    总量：<input id="insertTotal" name="giTotal"  class="form-control"  style="margin-bottom: 10px"  readonly>
+                    操作人：<input name="giStaff" class="form-control" placeholder="请输入操作人">
+                </form>
+            </div>
+
+            <div class="modal-footer border-0">
+                <button type="button" class="btn btn-link" data-dismiss="modal" id="insertClose">关闭</button>
+                <button type="button" class="btn btn-primary" onclick="insertGi()">确定提交</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="modal-5" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content">
+            <div class="modal-header bg-success border-0">
+                <h5 class="modal-title text-white">修改垃圾总量信息</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body p-5">
+                <form id="updateGiInfo">
+                    编号：<input id="giId" name="giId" class="form-control" style="margin-bottom: 10px" readonly>
+                    城市信息：<input name="giCity"  class="form-control" placeholder="请输入城市信息" style="margin-bottom: 10px">
+                    有害垃圾总量：<input onblur="totalUpdate();" id="updateHarmful" name="giHarmful"  class="form-control" placeholder="请输入有害垃圾总量" style="margin-bottom: 10px">
+                    可回收垃圾总量：<input onblur="totalUpdate();" id="updateRecyclable" name="giRecyclable"  class="form-control" placeholder="请输入可回收垃圾总量" style="margin-bottom: 10px">
+                    厨余垃圾总量：<input onblur="totalUpdate();" id="updateKitchenWaste" name="giKitchenWaste"  class="form-control" placeholder="请输入厨余垃圾总量" style="margin-bottom: 10px">
+                    其他垃圾总量：<input onblur="totalUpdate();" id="updateOther" name="giOther"  class="form-control" placeholder="请输入其他垃圾总量" style="margin-bottom: 10px">
+                    总量：<input name="giTotal" id="updateTotal"  class="form-control"  style="margin-bottom: 10px"  readonly>
+                    操作人：<input name="giStaff" class="form-control" placeholder="请输入操作人">
+                </form>
+            </div>
+
+            <div class="modal-footer border-0">
+                <button type="button" class="btn btn-link" data-dismiss="modal" id="updateClose">关闭</button>
+                <button type="button" class="btn btn-success" onclick="updateGi()">确定修改</button>
+            </div>
+        </div>
+    </div>
+</div>
+<div class="modal fade" id="modal-13" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+    <div class="modal-dialog" role="document">
+        <div class="modal-content bg-danger">
+            <div class="modal-header border-0">
+                <h5 class="modal-title text-white">删除数据</h5>
+                <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
+
+            <div class="modal-body text-white p-5">
+                <input type="hidden" id="deleteGiId">
+                <i style="font-size: 30px">你确定删除该条数据吗？</i>
+            </div>
+
+            <div class="modal-footer border-0">
+                <button type="button" class="btn btn-danger" data-dismiss="modal"  id="deleteClose">关闭</button>
+                <button type="button" class="btn btn-danger" onclick="deleteGi()">确定删除</button>
+            </div>
+        </div>
+    </div>
+</div>
+<script>
+
+    function giList() {
+        $.ajax({
+            url:"../giList",
+            method:"get",
+            data:{'pageNum':1,'pageSize':10},
+            success:function (result) {
+                if (result.code == 200){
+                    addTable(result.data)
+                    page(result.data)
+                }else{
+                    alert(result.message);
+                }
+            }
+        })
+    }
+    giList();
+    function addTable(dataList){
+        $("#t1").empty();
+        $.each(dataList.list,function (index,obj) {
+            $("#t1").append('<tr>'
+                +'<td>'+obj.giId+'</td>'
+                +'<td class="text-nowrap">'+obj.giCity+'</td>'
+                +'<td>'+obj.giTotal+' T</td>'
+                +'<td>'+obj.giHarmful+' T</td>'
+                +'<td>'+obj.giRecyclable+' T</td>'
+                +'<td>'+obj.giKitchenWaste+' T</td>'
+                +'<td>'+obj.giOther+' T</td>'
+                +'<td>'+obj.giIntoDate+'</td>'
+                +'<td>'+obj.giStaff+'</td>'
+                +'<td><button class="btn btn-outline-success" data-toggle="modal" data-target="#modal-5" id="'+obj.giId+'" onclick="updateLoadGId(this.id)">修改</button>'
+                    +'<button class="btn btn-outline-danger" data-toggle="modal" data-target="#modal-13" id="'+obj.giId+'" onclick="deleteLoadGId(this.id)">删除</button></td>'
+                +'</tr>')
+        })
+    }
+    //分页
+    function page(pageInfo){
+        $("#page").pagination(pageInfo.total, { //第一个参数指定共多少条记录
+            items_per_page:pageInfo.pageSize, // 每页显示多少条记录
+            next_text:">", //下一页按钮图标
+            prev_text:"<", //上一页按钮图标
+            num_display_entries:5,//主体页数
+            num_edge_entries: 2, //边缘页数
+            callback: function(index){//定义一个回调函数，用于每次点击页码发起分页查询请求
+                //index为当前页码，只不过下标是从0开始，因此需要+1操作
+                var pageNum = ++index;
+                $.ajax({
+                    url : '../giList',
+                    method : 'get',
+                    data : {'pageNum' : pageNum, 'pageSize' : 10},
+                    success : function(result){
+                        //渲染表格
+                        addTable(result.data);
+                    }
+                });
+            }
+        });
+    }
+    function findCity() {
+        $.ajax({
+            url:"../getGiListByCity",
+            method:"get",
+            data:{'pageNum':1,'pageSize':20,'cityName':$("#cityName").val()},
+            success:function (result) {
+                if (result.code == 200){
+                    addTable(result.data)
+                    page(result.data)
+                }else{
+                    alert(result.message);
+                }
+            }
+        })
+    }
+
+    function insertGi() {
+        $.ajax({
+            url:"../insertGiInfo",
+            method:"post",
+            data:$("#inputGiInfo").serialize(),
+            success:function (result) {
+                if (result.code == 200){
+                    $("#insertClose").click();
+                    alert(result.message);
+                    giList();
+                }else{
+                    alert(result.message);
+                }
+            }
+        })
+    }
+    function updateGi() {
+        $.ajax({
+            url:"../updateGiInfo",
+            method:"post",
+            data:$("#updateGiInfo").serialize(),
+            success:function (result) {
+                if (result.code == 200){
+                    $("#updateClose").click();
+                    alert(result.message);
+                    giList();
+                }else{
+                    alert(result.message);
+                }
+            }
+        })
+    }
+
+    function deleteGi() {
+        $.ajax({
+            url:"../deleteGiInfo",
+            method:"post",
+            data:{"giId":$("#deleteGiId").val()},
+            success:function (result) {
+                if (result.code == 200){
+                    $("#deleteClose").click();
+                    alert(result.message);
+                    giList();
+                }else{
+                    alert(result.message);
+                }
+            }
+        })
+    }
+    function totalInsert() {
+        var Harmful = $("#insertHarmful").val();
+        if (Harmful==""){
+            Harmful="0";
+        }
+        var Recyclable = $("#insertRecyclable").val();
+        if (Recyclable==""){
+            Recyclable="0";
+        }
+        var KitchenWaste = $("#insertKitchenWaste").val();
+        if (KitchenWaste==""){
+            KitchenWaste="0";
+        }
+        var Other = $("#insertOther").val();
+        if (Other==""){
+            Other="0";
+        }
+        //alert(parseFloat(Harmful)+parseFloat(Recyclable)+parseFloat(KitchenWaste)+parseFloat(Other));
+        $("#insertTotal").val(parseFloat(Harmful)+parseFloat(Recyclable)+parseFloat(KitchenWaste)+parseFloat(Other));
+    }
+
+    function totalUpdate() {
+        var Harmful = $("#updateHarmful").val();
+        if (Harmful==""){
+            Harmful="0";
+        }
+        var Recyclable = $("#updateRecyclable").val();
+        if (Recyclable==""){
+            Recyclable="0";
+        }
+        var KitchenWaste = $("#updateKitchenWaste").val();
+        if (KitchenWaste==""){
+            KitchenWaste="0";
+        }
+        var Other = $("#updateOther").val();
+        if (Other==""){
+            Other="0";
+        }
+        //alert(parseFloat(Harmful)+parseFloat(Recyclable)+parseFloat(KitchenWaste)+parseFloat(Other));
+        $("#updateTotal").val(parseFloat(Harmful)+parseFloat(Recyclable)+parseFloat(KitchenWaste)+parseFloat(Other));
+    }
+
+    function updateLoadGId(id) {
+        $("#giId").val(id);
+    }
+    function deleteLoadGId(id) {
+        $("#deleteGiId").val(id);
+    }
+</script>
+</body>
+</html>
